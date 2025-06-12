@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Đăng nhập</title>
-        <link rel="stylesheet" href="login.css"/>
+        <link rel="stylesheet" href="../css/login.css"/>
     </head>
     <body>
         <div class="login-box">
