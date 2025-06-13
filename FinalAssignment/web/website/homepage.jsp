@@ -21,7 +21,7 @@
         <div class="sidebar">
             <h2>Menu</h2>
             <a href="create.jsp"><i class="fas fa-file-alt"></i> Tạo đơn nghỉ phép</a>
-            <a href="#"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
+            <a href="accepted.jsp"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
             <a href="#"><i class="fas fa-history"></i> Lịch sử tạo đơn</a>
             <a href="#"><i class="fas fa-folder-open"></i> Lịch sử duyệt đơn</a>
             <a href="#"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
