@@ -13,13 +13,11 @@
         <link rel="stylesheet" href="../css/login.css"/>
     </head>
     <body>
-        <form action="login" method="post">
-        <div class="login-box">
-      <h2>Đăng nhập</h2>
-      <input type="text" placeholder="Tên tài khoản" name="user"/><br>
-      <input type="password" placeholder="Mật khẩu" name="pass"/><br>
-      <input class="button" type="submit" value="Đăng nhập"><br>
-      </form>
-    </div>
+        <form class="login-box" action="login" method="post">
+                <h2>Đăng nhập</h2>
+                <input type="text" placeholder="Tên tài khoản" name="user"/><br>
+                <input type="password" placeholder="Mật khẩu" name="pass"/><br>
+                <input class="button" type="submit" value="Đăng nhập"><br>
+        </form>
     </body>
 </html>

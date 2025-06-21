@@ -4,15 +4,34 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author anhqu
  */
 public class Account extends BaseModel {
-
     private String username;
     private String password;
     private String displayname;
+    private ArrayList<Role> roles = new ArrayList<>();
+
+    public ArrayList<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ArrayList<Role> roles) {
+        this.roles = roles;
+    }
+    
+
+    public String getDisplayname() {
+        return displayname;
+    }
+
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
+    }
 
     public String getUsername() {
         return username;
@@ -29,8 +48,6 @@ public class Account extends BaseModel {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getDisplayname() {
-        return displayname;
-    }
+    
 }
+
