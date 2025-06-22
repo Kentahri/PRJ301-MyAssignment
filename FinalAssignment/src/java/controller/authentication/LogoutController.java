@@ -4,8 +4,6 @@
  */
 package controller.authentication;
 
-import Dal.AccountDBContext;
-import Model.Account;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,29 +15,20 @@ import java.io.IOException;
  *
  * @author anhqu
  */
-public class LoginController extends HttpServlet {
+public class LogoutController extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String user = req.getParameter("user");
-        String pass = req.getParameter("pass");
-
-        AccountDBContext db = new AccountDBContext();
-        Account account = db.login(user, pass);
-        if (account == null) {
-            req.setAttribute("message", "fail");
-            req.getRequestDispatcher("website/login.jsp").forward(req, resp);
-        } else {
-            HttpSession session = req.getSession();
-            session.setAttribute("account", account);
-            req.getRequestDispatcher("website/homepage.jsp").forward(req, resp);
+        HttpSession session = req.getSession(false);
+        if(session != null){
+            session.invalidate();
         }
-
+        
+        resp.sendRedirect(req.getContextPath() + "/login");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("website/login.jsp").forward(req, resp);
     }
-
+    
 }

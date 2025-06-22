@@ -14,17 +14,17 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
             />
-        <link rel="stylesheet" href="../css/homepage.css"/>
-        <script src="../js/clock.js" defer></script>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage.css"/>
+        <script src="${pageContext.request.contextPath}/js/clock.js" defer></script>
     </head>
     <body>
         <div class="sidebar">
             <h2>Menu</h2>
-            <a href="create.jsp"><i class="fas fa-file-alt"></i> Tạo đơn nghỉ phép</a>
-            <a href="accepted.jsp"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
+            <a href="website/create"><i class="fas fa-file-alt"></i> Tạo đơn nghỉ phép</a>
+            <a href="website/accepted"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
             <a href="#"><i class="fas fa-history"></i> Lịch sử tạo đơn</a>
-            <a href="#"><i class="fas fa-folder-open"></i> Lịch sử duyệt đơn</a>
-            <a href="#"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
+            <a href="website/history"><i class="fas fa-folder-open"></i> Lịch sử duyệt đơn</a>
+            <a href="website/agenda"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
         </div>
 
         <div class="main">
@@ -35,9 +35,11 @@
                 </div>
                 <div class="user-info">
                     <i class="fas fa-user"></i>
-                    <span>Nguyễn Văn A</span>
+                    <span>${sessionScope.account.displayname}</span>
                 </div>
-                <button class="logout-btn">Đăng xuất</button>
+                <form action="${pageContext.request.contextPath}/logout" method="post">
+                    <button type="submit" class="logout-btn">Đăng xuất</button>
+                </form>
             </div>
 
             <div class="content">
