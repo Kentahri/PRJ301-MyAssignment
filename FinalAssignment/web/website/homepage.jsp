@@ -45,7 +45,7 @@
             <div class="content">
                 <div class="notification">
                     <i class="fas fa-bell"></i>
-                    <span>Bạn có 1 đơn nghỉ phép đang chờ duyệt.</span>
+                    <span>${requestScope.message}</span>
                     <button
                         class="close-btn"
                         onclick="this.parentElement.style.display = 'none'"

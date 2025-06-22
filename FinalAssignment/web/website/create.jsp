@@ -14,8 +14,8 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
             />
-        <link rel="stylesheet" href="../css/create.css"/>
-        <script src="../js/clock.js"></script>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/create.css"/>
+        <script src="${pageContext.request.contextPath}/js/clock.js"></script>
     </head>
     <body>
         <div class="sidebar">
@@ -35,27 +35,29 @@
                 </div>
                 <div class="user-info">
                     <i class="fas fa-user"></i>
-                    <span>Nguyễn Văn A</span>
+                    <span>${sessionScope.account.displayname}</span>
                 </div>
-                <button class="logout-btn">Đăng xuất</button>
+                <form action="${pageContext.request.contextPath}/logout" method="post">
+                    <button type="submit" class="logout-btn">Đăng xuất</button>
+                </form>
             </div>
 
             <div class="content">
                 <h2 style="margin-bottom: 20px; color: #2c3e50"></h2>
-                <form class="leave-form">
+                <form class="leave-form" action="create" method="post">
                     <fieldset>
                         <legend>Đơn xin nghỉ phép</legend>
 
                         <p>
-                            User: <strong>mr Tèo</strong>, Role: <strong>Nhân viên</strong>,
+                            User: <strong>${sessionScope.account.displayname}</strong>, Role: <strong>${sessionScope.account.roles[0].name}</strong>
                             Dep: <strong>phòng IT</strong>
                         </p>
 
                         <label for="from-date">Từ ngày:</label>
-                        <input type="date" id="from-date" name="from-date" required />
+                        <input type="date" id="from-date" name="fromDate" required />
 
                         <label for="to-date">Tới ngày:</label>
-                        <input type="date" id="to-date" name="to-date" required />
+                        <input type="date" id="to-date" name="toDate" required />
 
                         <label for="reason">Lý do:</label>
                         <textarea id="reason" name="reason" rows="4" required></textarea>
@@ -63,6 +65,7 @@
                         <button type="submit">Gửi</button>
                     </fieldset>
                 </form>
+
             </div>
         </div>
     </body>
