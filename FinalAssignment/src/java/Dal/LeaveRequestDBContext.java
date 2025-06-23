@@ -29,7 +29,7 @@ public class LeaveRequestDBContext extends DBContext<LeaveRequest>{
     @Override
     public void insert(LeaveRequest model) {
         try {
-            String sql = "INSERT INTO LeaveRequests(aid, startDate, endDate, reason) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO LeaveRequest(aid, startDate, endDate, reason) VALUES (?, ?, ?, ?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, model.getAccount().getId());
             stm.setDate(2, model.getStartDate());

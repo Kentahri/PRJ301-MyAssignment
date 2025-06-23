@@ -35,7 +35,7 @@ public class createController extends RoleController {
         LeaveRequestDBContext db = new LeaveRequestDBContext();
         db.insert(l);
         req.setAttribute("message", "bạn vừa tạo thành công đơn nghỉ phép!");
-        req.getRequestDispatcher("homepage.jsp");
+        req.getRequestDispatcher("homepage.jsp").forward(req, resp);
     }
 
     @Override
