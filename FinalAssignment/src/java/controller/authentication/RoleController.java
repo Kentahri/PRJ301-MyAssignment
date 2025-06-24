@@ -13,12 +13,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author anhqu
  */
-public abstract class RoleController extends BaseAuthenticationController{
+public abstract class RoleController extends BaseAuthenticationController {
+
     private boolean isGrantedAccessControl(
             HttpServletRequest req,
             Account account
@@ -30,25 +33,32 @@ public abstract class RoleController extends BaseAuthenticationController{
             account.setRoles(roles);
             req.getSession().setAttribute("account", account);
         }
-        for (Role role : account.getRoles()) {
-            for (Feature feature : role.getFeatures()) {
-                if (feature.getEntrypoint().equals(current_access_entrypoint)) {
-                    return true;
+        Set<String> allowedEntrypoints = (Set<String>) req.getSession().getAttribute("allowedEntrypoints");
+        if (allowedEntrypoints == null) {
+            allowedEntrypoints = new HashSet<>();
+            for (Role role : account.getRoles()) {
+                for (Feature feature : role.getFeatures()) {
+                    allowedEntrypoints.add(feature.getEntrypoint());
                 }
             }
+            req.getSession().setAttribute("allowedEntrypoints", allowedEntrypoints);
         }
-        return false;
+
+        return allowedEntrypoints.contains(current_access_entrypoint);
     }
 
     protected abstract void processPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException;
+
     protected abstract void processGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
         if (isGrantedAccessControl(req, account)) {
             processPost(req, resp, account);
         } else {
-//            resp.sendRedirect("../websiste/homepage.jsp");
-               resp.getWriter().println("Failed");
+            req.setAttribute("message", "Bạn không có quyền truy cập chức năng này!");
+            req.getRequestDispatcher("/website/homepage.jsp").forward(req, resp);
+
         }
     }
 
@@ -57,8 +67,8 @@ public abstract class RoleController extends BaseAuthenticationController{
         if (isGrantedAccessControl(req, account)) {
             processGet(req, resp, account);
         } else {
-//            resp.sendRedirect("../website/homepage.jsp");
-                   resp.getWriter().println("Failed");
+            req.setAttribute("message", "Bạn không có quyền truy cập chức năng này!");
+            req.getRequestDispatcher("/website/homepage.jsp").forward(req, resp);
         }
     }
 }
