@@ -5,13 +5,19 @@
 package controller.authentication;
 
 import Dal.AccountDBContext;
+import Dal.RoleDBContext;
 import Model.Account;
+import Model.Feature;
+import Model.Role;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -30,9 +36,24 @@ public class LoginController extends HttpServlet {
             req.setAttribute("message", "fail");
             req.getRequestDispatcher("website/login.jsp").forward(req, resp);
         } else {
+            RoleDBContext roleDB = new RoleDBContext();
+            ArrayList<Role> roles = roleDB.importRoles(account.getId());
+            account.setRoles(roles);
+
+            // Tạo danh sách quyền
+            Set<String> allowedEntrypoints = new HashSet<>();
+            for (Role role : roles) {
+                for (Feature feature : role.getFeatures()) {
+                    allowedEntrypoints.add(feature.getEntrypoint());
+                }
+            }
+
+            // Lưu vào session
             HttpSession session = req.getSession();
             session.setAttribute("account", account);
-            req.getRequestDispatcher("website/homepage.jsp").forward(req, resp);
+            session.setAttribute("allowedEntrypoints", allowedEntrypoints);
+
+            resp.sendRedirect("website/homepage.jsp");
         }
 
     }

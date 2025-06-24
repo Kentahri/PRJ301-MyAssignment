@@ -24,16 +24,16 @@
     java.util.Set<String> permissions = (java.util.Set<String>) session.getAttribute("allowedEntrypoints");
             %>
             <% if (permissions != null && permissions.contains("/website/create")) { %>
-            <a href="website/create"><i class="fas fa-file-alt"></i> Tạo đơn nghỉ phép</a>
+            <a href="create"><i class="fas fa-file-alt"></i> Tạo đơn nghỉ phép</a>
             <% } %>
             <% if (permissions != null && permissions.contains("/website/accepted")) { %>
-            <a href="website/accepted"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
+            <a href="accepted"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
             <% } %>
             <% if (permissions != null && permissions.contains("/website/history")) { %>
-            <a href="website/history"><i class="fas fa-folder-open"></i> Lịch sử duyệt đơn</a>
+            <a href="history"><i class="fas fa-folder-open"></i> Lịch sử duyệt đơn</a>
             <% } %>
             <% if (permissions != null && permissions.contains("/website/agenda")) { %>
-            <a href="website/agenda"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
+            <a href="agenda"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
             <% } %>
 
         </div>
