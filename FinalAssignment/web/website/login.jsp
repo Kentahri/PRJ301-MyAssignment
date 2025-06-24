@@ -27,9 +27,12 @@
             %>
             <div class="error-message">Đăng nhập thất bại. Vui lòng kiểm tra lại tài khoản và mật khẩu!</div>
             <%
+                } else if ("success".equals(message)) {
+            %>
+            <div class="success-message">Đăng ký thành công! Vui lòng đăng nhập.</div>
+            <%
                 }
             %>
-
 
             <h2>Đăng nhập</h2>
             <input type="text" placeholder="Tên tài khoản" name="user"/><br>
