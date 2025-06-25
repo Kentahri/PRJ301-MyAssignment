@@ -58,16 +58,23 @@ body {
 }
 
 .button {
+    display: inline-block;
     width: 100%;
     padding: 10px;
     background-color: #3b77c0;
     color: white;
+    text-decoration: none;
     border: none;
     border-radius: 5px;
     font-weight: bold;
     font-size: 14px;
     cursor: pointer;
+    text-align: center;
 }
+.button:hover {
+    background-color: #2f66aa;
+}
+
 
 .button:hover {
     background-color: #2f66aa;

@@ -38,7 +38,9 @@
             <input type="text" placeholder="Tên tài khoản" name="user"/><br>
             <input type="password" placeholder="Mật khẩu" name="pass"/><br>
             <input class="button" type="submit" value="Đăng nhập"><br>
+            <a class="button" href="${pageContext.request.contextPath}/register">Đăng ký</a><br>
         </form>
 
     </body>
 </html>
+    

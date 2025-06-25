@@ -28,6 +28,7 @@
             <input type="password" placeholder="Mật khẩu" name="pass" required /><br>
             <input type="text" placeholder="Tên hiển thị" name="displayname" required /><br>
             <input class="button" type="submit" value="Đăng ký"><br>
+            <a class="button" href="${pageContext.request.contextPath}/login">Đăng nhập</a><br>
         </form>
     </body>
 </html>
