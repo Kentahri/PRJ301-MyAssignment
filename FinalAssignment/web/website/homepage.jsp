@@ -4,6 +4,7 @@
     Author     : anhqu
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,22 +21,22 @@
     <body>
         <div class="sidebar">
             <h2>Menu</h2>
-            <% 
-    java.util.Set<String> permissions = (java.util.Set<String>) session.getAttribute("allowedEntrypoints");
-            %>
-            <% if (permissions != null && permissions.contains("/website/create")) { %>
-            <a href="create"><i class="fas fa-file-alt"></i> Tạo đơn nghỉ phép</a>
-            <% } %>
-            <% if (permissions != null && permissions.contains("/website/accepted")) { %>
-            <a href="accepted"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
-            <% } %>
-            <% if (permissions != null && permissions.contains("/website/history")) { %>
-            <a href="history"><i class="fas fa-folder-open"></i> Lịch sử duyệt đơn</a>
-            <% } %>
-            <% if (permissions != null && permissions.contains("/website/agenda")) { %>
-            <a href="agenda"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
-            <% } %>
-
+            <c:set var="permissions" value="${sessionScope.allowedEntrypoints}" />
+            <c:if test="${permissions != null && permissions.contains('/website/create')}">
+                <a href="create"><i class="fas fa-file-alt"></i> Tạo đơn nghỉ phép</a>
+            </c:if>
+            <c:if test="${permissions != null && permissions.contains('/website/accepted')}">
+                <a href="accepted"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
+            </c:if>
+            <c:if test="${permissions != null && permissions.contains('/website/history')}">
+                <a href="history"><i class="fas fa-folder-open"></i> Lịch sử duyệt đơn</a>
+            </c:if>
+            <c:if test="${permissions != null && permissions.contains('/website/agenda')}">
+                <a href="agenda"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
+            </c:if>
+            <c:if test="${permissions != null && permissions.contains('/admin/updaterole')}">
+                <a href="../admin/updaterole"><i class="fas fa-user-shield"></i> Cấp quyền tài khoản</a>
+            </c:if>
         </div>
 
         <div class="main">

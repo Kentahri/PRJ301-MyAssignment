@@ -93,6 +93,58 @@ public class AccountDBContext extends DBContext<Account> {
         }
     }
 
+    public void setRole(int aid, int rid) {
+        try {
+            String delete = "DELETE FROM Account_Role WHERE aid = ?";
+            PreparedStatement delStm = connection.prepareStatement(delete);
+            delStm.setInt(1, aid);
+            delStm.executeUpdate();
+
+            String insert = "INSERT INTO Account_Role (aid, rid) VALUES (?, ?)";
+            PreparedStatement insStm = connection.prepareStatement(insert);
+            insStm.setInt(1, aid);
+            insStm.setInt(2, rid);
+            insStm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public ArrayList<Account> getAllAccounts() {
+        ArrayList<Account> accounts = new ArrayList<>();
+        try {
+            String sql = "SELECT aid, username, displayname FROM Account";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Account acc = new Account();
+                acc.setId(rs.getInt("aid"));
+                acc.setUsername(rs.getString("username"));
+                acc.setDisplayname(rs.getString("displayname"));
+                accounts.add(acc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return accounts;
+    }
+
     @Override
     public ArrayList<Account> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

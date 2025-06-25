@@ -71,7 +71,29 @@ public class RoleDBContext extends DBContext<Role>{
 
     @Override
     public ArrayList<Role> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<Role> roles = new ArrayList<>();
+        try {
+            String sql = "SELECT rid, rname FROM [Role]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Role r = new Role();
+                r.setId(rs.getInt("rid"));
+                r.setName(rs.getString("rname"));
+                roles.add(r);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RoleDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return roles;
     }
 
     @Override
