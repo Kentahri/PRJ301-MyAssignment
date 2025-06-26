@@ -8,20 +8,22 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class LeaveRequest extends BaseModel {
-    private Account account;         
+    private Account createdBy;         
     private Date startDate;          
     private Date endDate;           
     private String reason;           
-    private String status;           
+    private int status;           
     private Timestamp createdAt;     
-    private Timestamp updatedAt;    
+    private Timestamp updatedAt;
+    private Account processBy;
+    private String note;
 
-    public Account getAccount() {
-        return account;
+    public Account getCreatedBy() {
+        return createdBy;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setCreatedBy(Account createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Date getStartDate() {
@@ -48,11 +50,11 @@ public class LeaveRequest extends BaseModel {
         this.reason = reason;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -71,5 +73,24 @@ public class LeaveRequest extends BaseModel {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public Account getProcessBy() {
+        return processBy;
+    }
+
+    public void setProcessBy(Account processBy) {
+        this.processBy = processBy;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 }
+
+    
 

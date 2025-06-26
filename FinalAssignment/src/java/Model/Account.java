@@ -11,10 +11,20 @@ import java.util.ArrayList;
  * @author anhqu
  */
 public class Account extends BaseModel {
+
     private String username;
     private String password;
     private String displayname;
     private ArrayList<Role> roles = new ArrayList<>();
+    private Employee employee;
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
     public ArrayList<Role> getRoles() {
         return roles;
@@ -23,7 +33,6 @@ public class Account extends BaseModel {
     public void setRoles(ArrayList<Role> roles) {
         this.roles = roles;
     }
-    
 
     public String getDisplayname() {
         return displayname;
@@ -48,6 +57,5 @@ public class Account extends BaseModel {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-}
 
+}
