@@ -20,11 +20,21 @@ public class LeaveRequestDBContext extends DBContext<LeaveRequest> {
     public ArrayList<LeaveRequest> listCreatedBy(int aid) {
         ArrayList<LeaveRequest> list = new ArrayList<>();
         try {
-            String sql = "SELECT model.id, model.startDate, model.endDate, model.reason, model.status, "
-                    + "model.processedby, model.note, ap.username AS processedUser "
-                    + "FROM LeaveRequest model "
-                    + "LEFT JOIN Account ap ON model.processedby = ap.aid "
-                    + "WHERE model.createdby = ?";
+            String sql = """
+            SELECT 
+                lr.id, 
+                lr.startDate, 
+                lr.endDate, 
+                lr.reason, 
+                lr.status, 
+                lr.note, 
+                lr.processedBy, 
+                p.username AS processedUser
+            FROM LeaveRequest lr
+            LEFT JOIN Account p ON lr.processedBy = p.aid
+            WHERE lr.createdBy = ?
+            ORDER BY lr.startDate DESC
+        """;
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, aid);
             ResultSet rs = stm.executeQuery();
@@ -38,8 +48,7 @@ public class LeaveRequestDBContext extends DBContext<LeaveRequest> {
                 l.setStatus(rs.getInt("status"));
                 l.setNote(rs.getString("note"));
 
-                // Gán người xử lý (nếu có)
-                int processedId = rs.getInt("processedby");
+                int processedId = rs.getInt("processedBy");
                 if (!rs.wasNull()) {
                     Account p = new Account();
                     p.setId(processedId);
@@ -141,7 +150,7 @@ public class LeaveRequestDBContext extends DBContext<LeaveRequest> {
 
     public void delete(int id, int accountId) {
         try {
-            String sql = "DELETE FROM LeaveRequest WHERE id = ? AND aid = ? AND status = 0";
+            String sql = "DELETE FROM LeaveRequest WHERE id = ? AND createdBy = ? AND status = 0";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             stm.setInt(2, accountId);
@@ -151,6 +160,34 @@ public class LeaveRequestDBContext extends DBContext<LeaveRequest> {
         } finally {
             try {
                 if (!connection.isClosed()) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(LeaveRequestDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void updateStatus(int requestId, int status, int processedBy, String note) {
+        try {
+            String sql = "UPDATE LeaveRequest "
+                    + "SET status = ?, "
+                    + "processedBy = ?, "
+                    + "note = ?, "
+                    + "updatedAt = GETDATE() "
+                    + "WHERE id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, status);
+            stm.setInt(2, processedBy);
+            stm.setString(3, note);
+            stm.setInt(4, requestId);
+
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(LeaveRequestDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (connection != null && !connection.isClosed()) {
                     connection.close();
                 }
             } catch (SQLException ex) {

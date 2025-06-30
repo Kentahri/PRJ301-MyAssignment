@@ -27,7 +27,7 @@ public class myrequestController extends RoleController {
         LeaveRequestDBContext db = new LeaveRequestDBContext();
         ArrayList<LeaveRequest> myRequest = db.listCreatedBy(account.getId());
 
-        req.setAttribute("requests", myRequest);
+        req.setAttribute("myRequests", myRequest);
         req.getRequestDispatcher("/website/myrequest.jsp").forward(req, resp);
     }
 

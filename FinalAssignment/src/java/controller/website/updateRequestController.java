@@ -35,7 +35,7 @@ public class updateRequestController extends RoleController {
 
         LeaveRequestDBContext db = new LeaveRequestDBContext();
         db.update(request);
-        resp.sendRedirect("myrequests?message=updated");
+        resp.sendRedirect("myrequest?message=updated");
     }
 
     @Override

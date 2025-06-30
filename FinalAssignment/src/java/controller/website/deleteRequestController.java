@@ -25,7 +25,7 @@ public class deleteRequestController extends RoleController {
         LeaveRequestDBContext db = new LeaveRequestDBContext();
         db.delete(id, account.getId());
 
-        resp.sendRedirect("myrequests?message=deleted");
+        resp.sendRedirect("myrequest?message=deleted");
     }
 
     @Override

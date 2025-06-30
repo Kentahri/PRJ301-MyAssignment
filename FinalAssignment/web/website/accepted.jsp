@@ -23,21 +23,33 @@
         <div class="sidebar">
             <h2>Menu</h2>
             <c:set var="permissions" value="${sessionScope.allowedEntrypoints}" />
+
+            <a href="homepage"><i class="fas fa-home"></i> Trang chủ</a>
+
             <c:if test="${permissions != null && permissions.contains('/website/create')}">
                 <a href="create"><i class="fas fa-file-alt"></i> Tạo đơn nghỉ phép</a>
             </c:if>
+
             <c:if test="${permissions != null && permissions.contains('/website/accepted')}">
                 <a href="accepted"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
             </c:if>
+
             <c:if test="${permissions != null && permissions.contains('/website/history')}">
                 <a href="history"><i class="fas fa-folder-open"></i> Lịch sử duyệt đơn</a>
             </c:if>
+
+            <c:if test="${permissions != null && permissions.contains('/website/myrequest')}">
+                <a href="myrequest"><i class="fas fa-list"></i> Lịch sử tạo đơn</a>
+            </c:if>
+
             <c:if test="${permissions != null && permissions.contains('/website/agenda')}">
                 <a href="agenda"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
             </c:if>
+
             <c:if test="${permissions != null && permissions.contains('/admin/updaterole')}">
                 <a href="../admin/updaterole"><i class="fas fa-user-shield"></i> Cấp quyền tài khoản</a>
             </c:if>
+
         </div>
 
         <div class="main">

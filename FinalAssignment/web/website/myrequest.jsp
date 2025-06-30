@@ -4,39 +4,40 @@
 <html>
     <head>
         <title>Đơn nghỉ phép của tôi</title>
-        <link rel="stylesheet" href="../css/accepted.css"/>
+        <link rel="stylesheet" href="../css/myrequest.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
         <script src="../js/clock.js" defer></script>
-
-
-        <script>
-            function openModal(id, from, to, reason) {
-                document.getElementById('modal').style.display = 'block';
-                document.getElementById('request-id').value = id;
-                document.getElementById('delete-request-id').value = id;
-                document.getElementById('modal-from').value = from;
-                document.getElementById('modal-to').value = to;
-                document.getElementById('modal-reason').value = reason;
-            }
-
-            function closeModal() {
-                document.getElementById('modal').style.display = 'none';
-            }
-        </script>
-
+        <script src="../js/myrequest.js" defer></script>
     </head>
     <body>
         <div class="sidebar">
             <h2>Menu</h2>
             <c:set var="permissions" value="${sessionScope.allowedEntrypoints}" />
-            <c:if test="${permissions.contains('/website/create')}">
+
+            <a href="homepage"><i class="fas fa-home"></i> Trang chủ</a>
+
+            <c:if test="${permissions != null && permissions.contains('/website/create')}">
                 <a href="create"><i class="fas fa-file-alt"></i> Tạo đơn nghỉ phép</a>
             </c:if>
-            <c:if test="${permissions.contains('/website/myrequests')}">
-                <a href="myrequests"><i class="fas fa-user-clock"></i> Đơn của tôi</a>
+
+            <c:if test="${permissions != null && permissions.contains('/website/accepted')}">
+                <a href="accepted"><i class="fas fa-check-circle"></i> Duyệt đơn nghỉ phép</a>
             </c:if>
-            <c:if test="${permissions.contains('/website/accepted')}">
-                <a href="accepted"><i class="fas fa-check-circle"></i> Duyệt đơn</a>
+
+            <c:if test="${permissions != null && permissions.contains('/website/history')}">
+                <a href="history"><i class="fas fa-folder-open"></i> Lịch sử duyệt đơn</a>
+            </c:if>
+
+            <c:if test="${permissions != null && permissions.contains('/website/myrequest')}">
+                <a href="myrequest"><i class="fas fa-list"></i> Lịch sử tạo đơn</a>
+            </c:if>
+
+            <c:if test="${permissions != null && permissions.contains('/website/agenda')}">
+                <a href="agenda"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
+            </c:if>
+
+            <c:if test="${permissions != null && permissions.contains('/admin/updaterole')}">
+                <a href="../admin/updaterole"><i class="fas fa-user-shield"></i> Cấp quyền tài khoản</a>
             </c:if>
         </div>
 
@@ -121,22 +122,21 @@
                             <button class="approve-btn" type="submit">
                                 <i class="fas fa-pen"></i> Chỉnh sửa
                             </button>
+
+                            <form method="post" action="deleterequest" onsubmit="return confirm('Bạn có chắc muốn xóa đơn này?')">
+                                <input type="hidden" name="id" id="delete-request-id" />
+                                <button class="reject-btn" type="submit">
+                                    <i class="fas fa-trash"></i> Xóa
+                                </button>
+                            </form>
+
+                            <button class="close-btn" type="button" onclick="closeModal()">
+                                <i class="fas fa-times-circle"></i> Đóng
+                            </button>
                         </div>
                     </form>
-
-                    <form method="post" action="deleterequest" style="margin-top:10px;">
-                        <input type="hidden" name="id" id="delete-request-id" />
-                        <button class="reject-btn" type="submit" onclick="return confirm('Bạn có chắc muốn xóa đơn này?')">
-                            <i class="fas fa-trash"></i> Xóa
-                        </button>
-                    </form>
-
-                    <button class="close-btn" onclick="closeModal()">
-                        <i class="fas fa-times-circle"></i> Đóng
-                    </button>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
