@@ -22,20 +22,34 @@ public class updateRequestController extends RoleController {
 
     @Override
     protected void processPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
+        String action = req.getParameter("action");
         int id = Integer.parseInt(req.getParameter("id"));
-        Date fromDate = Date.valueOf(req.getParameter("fromDate"));
-        Date toDate = Date.valueOf(req.getParameter("toDate"));
-        String reason = req.getParameter("reason");
-
-        LeaveRequest request = new LeaveRequest();
-        request.setId(id);
-        request.setStartDate(fromDate);
-        request.setEndDate(toDate);
-        request.setReason(reason);
 
         LeaveRequestDBContext db = new LeaveRequestDBContext();
-        db.update(request);
-        resp.sendRedirect("myrequest?message=updated");
+
+        if ("update".equals(action)) {
+            // Lấy dữ liệu chỉnh sửa
+            Date fromDate = Date.valueOf(req.getParameter("fromDate"));
+            Date toDate = Date.valueOf(req.getParameter("toDate"));
+            String reason = req.getParameter("reason");
+
+            LeaveRequest request = new LeaveRequest();
+            request.setId(id);
+            request.setStartDate(fromDate);
+            request.setEndDate(toDate);
+            request.setReason(reason);
+
+            db.update(request);
+
+            resp.sendRedirect("myrequest?message=updated");
+        } else if ("delete".equals(action)) {
+            db.delete(id, account.getId());
+
+            resp.sendRedirect("myrequest?message=deleted");
+        } else {
+            // Trường hợp không rõ action
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action");
+        }
     }
 
     @Override

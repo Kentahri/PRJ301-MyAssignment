@@ -119,17 +119,12 @@
                         <textarea name="reason" id="modal-reason" rows="4" required></textarea>
 
                         <div class="button-group">
-                            <button class="approve-btn" type="submit">
+                            <button class="approve-btn" name="action" value="update" type="submit">
                                 <i class="fas fa-pen"></i> Chỉnh sửa
                             </button>
-
-                            <form method="post" action="deleterequest" onsubmit="return confirm('Bạn có chắc muốn xóa đơn này?')">
-                                <input type="hidden" name="id" id="delete-request-id" />
-                                <button class="reject-btn" type="submit">
-                                    <i class="fas fa-trash"></i> Xóa
-                                </button>
-                            </form>
-
+                            <button class="reject-btn" name="action" value="delete" type="submit" onclick="return confirm('Bạn có chắc muốn xóa đơn này?')">
+                                <i class="fas fa-trash"></i> Xóa
+                            </button>
                             <button class="close-btn" type="button" onclick="closeModal()">
                                 <i class="fas fa-times-circle"></i> Đóng
                             </button>
